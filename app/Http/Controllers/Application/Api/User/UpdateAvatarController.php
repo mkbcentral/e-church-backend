@@ -20,7 +20,7 @@ class UpdateAvatarController extends Controller
             ]);
             $user = auth()->user();
             $user->update([
-                'avatar' => FileRepository::uploadFile($request->avatar, 'public')
+                'avatar' => FileRepository::uploadFile($request->avatar, 'public', 'user/avatar')
             ]);
             return response([
                 'user' => $user,

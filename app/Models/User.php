@@ -57,4 +57,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(ApiPasswordResetToken::class);
     }
+
+    /**
+     * Get the church associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function church(): HasOne
+    {
+        return $this->hasOne(Church::class);
+    }
 }

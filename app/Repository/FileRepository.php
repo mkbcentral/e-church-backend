@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Storage;
 
 class FileRepository
 {
-    public static function uploadFile($image, string $path = 'public'): string
+    public static function uploadFile($image, string $path = 'public', $directory): string
     {
         $filename = time() . '.png';
         Storage::disk($path)
-            ->put('user/avatar' . $filename, base64_decode($image));
-        return '/storage/avatars/' . $filename;
+            ->put($directory . $filename, base64_decode($image));
+        return '/storage/' . $directory . '' . $filename;
     }
 }

@@ -36,7 +36,7 @@ class PasswordResetController extends Controller
         } catch (Exception $ex) {
             return response([
                 'error' => $ex->getMessage(),
-            ]);
+            ], 200);
         }
     }
     /**
