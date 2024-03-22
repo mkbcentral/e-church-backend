@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Application\Api\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Repository\FileRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -23,7 +24,7 @@ class UpdateAvatarController extends Controller
                 'avatar' => FileRepository::uploadFile($request->avatar, 'public', 'user/avatar')
             ]);
             return response([
-                'user' => $user,
+                'user' => new UserResource($user),,
                 'message' => 'Modification avec succès.',
             ], 201);
             //code...

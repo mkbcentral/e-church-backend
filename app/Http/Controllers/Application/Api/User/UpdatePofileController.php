@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Application\Api\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -22,7 +23,7 @@ class UpdatePofileController extends Controller
             $user = auth()->user();
             $user->update($fields);
             return response([
-                'user' => $user,
+                'user' => new UserResource($user), r,
                 'message' => 'Modification avec succès.',
             ], 201);
         } catch (HttpException $ex) {
