@@ -10,6 +10,7 @@ use App\Http\Controllers\Application\Api\User\PasswordResetController;
 use App\Http\Controllers\Application\Api\User\RegisterController;
 use App\Http\Controllers\Application\Api\User\UpdateAvatarController;
 use App\Http\Controllers\Application\Api\User\UpdatePofileController;
+use App\Http\Controllers\ListChurchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,6 @@ Route::prefix('church')->group(function () {
     Route::get('/make-approved', [ChangeChurchStatusController::class, 'makeApproved'])->middleware('auth:sanctum');
     Route::get('/make-rejected', [ChangeChurchStatusController::class, 'makeRejected'])->middleware('auth:sanctum');
     Route::get('/make-suspended', [ChangeChurchStatusController::class, 'makeSuspended'])->middleware('auth:sanctum');
+
+    Route::get('/list', [ListChurchController::class, 'getListChurches'])->middleware('auth:sanctum');
 });
