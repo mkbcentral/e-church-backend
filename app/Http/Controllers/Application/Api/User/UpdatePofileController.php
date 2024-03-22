@@ -23,7 +23,7 @@ class UpdatePofileController extends Controller
             $user = auth()->user();
             $user->update($fields);
             return response([
-                'user' => new UserResource($user), r,
+                'user' => new UserResource($user),
                 'message' => 'Modification avec succès.',
             ], 201);
         } catch (HttpException $ex) {
