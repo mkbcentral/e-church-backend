@@ -24,7 +24,7 @@ class UpdateAvatarController extends Controller
                 'avatar' => FileRepository::uploadFile($request->avatar, 'public', 'user/avatar')
             ]);
             return response([
-                'user' => new UserResource($user),,
+                'user' => new UserResource($user),
                 'message' => 'Modification avec succès.',
             ], 201);
             //code...
