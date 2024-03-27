@@ -1,6 +1,6 @@
 <x-mail::message>
-    {{ $user->name }}
+    {{ $apiPasswordResetToken->user->name }}
     # Votre code de verification
-    -Code: {{ $user->apiPasswordResetToken->code }}
+    -Code: {{ $apiPasswordResetToken->code }}
     {{ config('app.name') }}
 </x-mail::message>

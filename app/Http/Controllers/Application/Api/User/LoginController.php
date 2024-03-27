@@ -32,7 +32,7 @@ class LoginController extends Controller
                     'user' => new UserResource($user),
                     'token' => $token,
                     'message' => 'Connexion avec succès.',
-                ], 201);
+                ], 200);
             }
         } catch (HttpException $ex) {
             return response([

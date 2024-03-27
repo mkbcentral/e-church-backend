@@ -23,7 +23,7 @@ Route::prefix('user')->group(function () {
     Route::post('/register', RegisterController::class);
     Route::get('/logout', LogoutController::class)->middleware('auth:sanctum');
     Route::put('/update-profile/{user}', UpdatePofileController::class)->middleware('auth:sanctum');
-    Route::post('/update-avatar', UpdateAvatarController::class)->middleware('auth:sanctum');
+    Route::put('/update-avatar/{user}', UpdateAvatarController::class)->middleware('auth:sanctum');
     Route::post('/send-password-reset-token', [PasswordResetController::class, 'sendPasswordResetToken']);
     Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 });

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\ApiPasswordResetToken;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -12,14 +13,14 @@ use Illuminate\Queue\SerializesModels;
 class ApiResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public User $user;
+    public ApiPasswordResetToken $apiPasswordResetToken;
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user)
+    public function __construct(ApiPasswordResetToken $apiPasswordResetToken)
     {
-        $this->user = $user;
-        return $user;
+        $this->apiPasswordResetToken = $apiPasswordResetToken;
+        return $apiPasswordResetToken;
     }
 
     /**
@@ -28,7 +29,8 @@ class ApiResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: 'mkbcentral@gmail.com',
+            from: 'mkbcentral@gmail.com',
+            to: $this->apiPasswordResetToken->user->email,
             subject: 'Api Reset Password Mail',
 
         );

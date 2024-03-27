@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Application\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApiResetPasswordMail;
+use App\Models\ApiPasswordResetToken;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 
 class PasswordResetController extends Controller
 {
@@ -21,22 +23,24 @@ class PasswordResetController extends Controller
                 'email' => 'required|email'
             ]);
             $user = User::where('email', $request->email)->first();
+
             # code...
             if ($user->apiPasswordResetToken) {
                 $user->apiPasswordResetToken->delete();
             }
             $code = rand(100000, 999999);
-            $user->apiPasswordResetToken()->create([
+            $token = ApiPasswordResetToken::create([
+                'user_id' => $user->id,
                 'code' => $code,
             ]);
-            Mail::send(new ApiResetPasswordMail($user));
+            Mail::send(new ApiResetPasswordMail($token));
             return response()->json([
                 'message' => 'Code de validation bien envoyé.'
-            ]);
+            ], 200);
         } catch (Exception $ex) {
             return response([
                 'error' => $ex->getMessage(),
-            ], 200);
+            ]);
         }
     }
     /**
@@ -58,7 +62,7 @@ class PasswordResetController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users,email',
             'code' => 'required|numeric',
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ]);
         $user = User::where('email', $request->email)->first();
         if ($this->checkCode($user->email, $request->code) == true) {
@@ -67,12 +71,12 @@ class PasswordResetController extends Controller
             ]);
             $user->apiPasswordResetToken->delete();
             return response()->json([
-                'message' => 'Mot de passze bien réinitialisé.'
+                'message' => 'Mot de passe bien réinitialisé.'
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Code de validation incorrect.'
-            ], 400);
+                'error' => 'Code de validation incorrect.'
+            ]);
         }
     }
 }
