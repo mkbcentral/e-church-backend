@@ -9,7 +9,6 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Return_;
 
 class PasswordResetController extends Controller
 {

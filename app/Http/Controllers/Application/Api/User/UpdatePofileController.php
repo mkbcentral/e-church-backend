@@ -25,7 +25,7 @@ class UpdatePofileController extends Controller
             return response([
                 'user' => new UserResource($user),
                 'message' => 'Modification avec succès.',
-            ], 201);
+            ], 200);
         } catch (HttpException $ex) {
             return response([
                 'error' => $ex->getMessage(),

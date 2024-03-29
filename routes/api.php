@@ -4,6 +4,7 @@ use App\Http\Controllers\Application\Api\Church\ChangeChurchStatusController;
 use App\Http\Controllers\Application\Api\Church\CreateChurchController;
 use App\Http\Controllers\Application\Api\Church\UpdateInfoChurchController;
 use App\Http\Controllers\Application\Api\Church\UpdateLogoChurchController;
+use App\Http\Controllers\Application\Api\User\GetuserInforController;
 use App\Http\Controllers\Application\Api\User\LoginController;
 use App\Http\Controllers\Application\Api\User\LogoutController;
 use App\Http\Controllers\Application\Api\User\PasswordResetController;
@@ -11,12 +12,7 @@ use App\Http\Controllers\Application\Api\User\RegisterController;
 use App\Http\Controllers\Application\Api\User\UpdateAvatarController;
 use App\Http\Controllers\Application\Api\User\UpdatePofileController;
 use App\Http\Controllers\ListChurchController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::prefix('user')->group(function () {
     Route::post('/login', LoginController::class);
@@ -26,6 +22,7 @@ Route::prefix('user')->group(function () {
     Route::put('/update-avatar/{user}', UpdateAvatarController::class)->middleware('auth:sanctum');
     Route::post('/send-password-reset-token', [PasswordResetController::class, 'sendPasswordResetToken']);
     Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
+    Route::get('/auth-user', [GetuserInforController::class, 'getAuthUser'])->middleware('auth:sanctum');
 });
 Route::prefix('church')->group(function () {
     Route::post('/create', CreateChurchController::class)->middleware('auth:sanctum');

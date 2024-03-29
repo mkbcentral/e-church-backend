@@ -18,15 +18,22 @@ class UpdateAvatarController extends Controller
     {
         try {
             $request->validate([
-                'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+                'avatar' => 'required',
             ]);
             $user->update([
                 'avatar' => FileRepository::uploadFile($request->avatar, 'public', 'user/avatar')
             ]);
+
+
+            // Check if the user already has an avatar
+            if ($user->avatar) {
+                // Delete the old avatar from the server
+                FileRepository::deleteFile($user->avatar, 'public');
+            }
             return response([
                 'user' => new UserResource($user),
                 'message' => 'Modification avec succès.',
-            ], 201);
+            ], 200);
             //code...
         } catch (HttpException $ex) {
             return response([
