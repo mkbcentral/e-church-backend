@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'avatar' => app('url')->asset($this->avatar),
+            'avatar' => $this->avatar ? config('app.url') . '/storage/' . $this->avatar : null,
         ];
     }
 }

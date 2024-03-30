@@ -11,7 +11,7 @@ class FileRepository
         $filename = time() . '.png';
         Storage::disk($path)
             ->put($directory . $filename, base64_decode($image));
-        return '/storage/' . $directory . '' . $filename;
+        return  $directory . '' . $filename;
     }
 
     // Delete a file from the server

@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Models\ApiPasswordResetToken;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -30,7 +29,7 @@ class ApiResetPasswordMail extends Mailable
     {
         return new Envelope(
             from: 'mkbcentral@gmail.com',
-            to: $this->apiPasswordResetToken->user->email,
+            to: "mkbcentral@gmail.com",
             subject: 'Api Reset Password Mail',
 
         );
