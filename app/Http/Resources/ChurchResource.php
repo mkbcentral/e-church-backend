@@ -19,6 +19,7 @@ class ChurchResource extends JsonResource
             'name' => $this->name,
             'abbreviation' => $this->abbreviation,
             'logo' => config('app.url') . '/storage/' . $this->logo,
+            'status' => $this->status,
         ];
     }
 }

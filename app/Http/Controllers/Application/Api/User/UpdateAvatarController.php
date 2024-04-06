@@ -7,7 +7,6 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repository\FileRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UpdateAvatarController extends Controller

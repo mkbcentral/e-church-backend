@@ -18,10 +18,12 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'required|email',
+                'login' => 'required',
                 'password' => 'required',
             ]);
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->login)
+                ->orWhere('phone', $request->login)
+                ->first();
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
                     'message' => 'The provided credentials are incorrect.',

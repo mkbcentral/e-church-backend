@@ -26,8 +26,7 @@ Route::prefix('user')->group(function () {
 });
 Route::prefix('church')->group(function () {
     Route::post('/create', CreateChurchController::class)->middleware('auth:sanctum');
-    Route::put('/update-info', UpdateInfoChurchController::class)->middleware('auth:sanctum');
-    Route::post('/update-logo', UpdateLogoChurchController::class)->middleware('auth:sanctum');
+    Route::put('/update-info/{church}', UpdateInfoChurchController::class)->middleware('auth:sanctum');
     Route::get('/make-pending', [ChangeChurchStatusController::class, 'makePending'])->middleware('auth:sanctum');
     Route::get('/make-approved', [ChangeChurchStatusController::class, 'makeApproved'])->middleware('auth:sanctum');
     Route::get('/make-rejected', [ChangeChurchStatusController::class, 'makeRejected'])->middleware('auth:sanctum');

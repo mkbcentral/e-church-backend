@@ -14,7 +14,8 @@ class GetuserInforController extends Controller
         try {
             return response()->json([
                 'user' =>  new UserResource(Auth::user()),
-                'message' => ''
+                'message' => '',
+                'token' => ''
             ], 200);
         } catch (HttpException $ex) {
             return response([
