@@ -38,7 +38,7 @@ class UpdatePreachingController extends Controller
                 ]);
             }
             return response()->json([
-                'data' => new PReach($preaching),
+                'data' => new Preaching($preaching),
             ], 200);
         } catch (Exception $ex) {
             return response()->json([
