@@ -21,7 +21,7 @@ class RegisterController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|unique:users',
-                'password' => 'required|confirmed|min:6|max:255',
+                'password' => 'required|min:6|max:255',
             ]);
             $user = User::create([
                 'name' => $request->name,
@@ -31,15 +31,13 @@ class RegisterController extends Controller
             ]);
             $token = $user->createToken('token')->plainTextToken;
             return response([
-                'user' => new UserResource($user, true),
+                'data' => new UserResource($user, true),
                 'token' => $token,
-                'message' => 'Inscription avec succès.',
             ], 200);
         } catch (HttpException $ex) {
             return response([
                 'error' => $ex->getMessage(),
-                'code' => $ex->getStatusCode(),
-            ]);
+            ], 500);
         }
     }
 }

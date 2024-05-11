@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Application\Api\User;
 
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LogoutController extends Controller
 {
@@ -11,9 +12,15 @@ class LogoutController extends Controller
      */
     public function __invoke()
     {
-        auth()->user()->tokens()->delete();
-        return response([
-            'message' => 'Déconnexion avec succès.',
-        ], 200);
+        try {
+            auth()->user()->tokens()->delete();
+            return response([
+                'message' => 'Déconnexion avec succès.',
+            ], 200);
+        } catch (HttpException $ex) {
+            return response([
+                'error' => $ex->getMessage(),
+            ], 500);
+        }
     }
 }

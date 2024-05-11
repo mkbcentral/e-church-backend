@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone', 'avatar'
+        'phone',
+        'avatar',
+        'role_id'
     ];
 
     /**
@@ -66,5 +71,15 @@ class User extends Authenticatable
     public function church(): HasOne
     {
         return $this->hasOne(Church::class);
+    }
+
+    /**
+     * Get the role that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

@@ -39,7 +39,7 @@ class PasswordResetController extends Controller
         } catch (Exception $ex) {
             return response([
                 'error' => $ex->getMessage(),
-            ]);
+            ], 501);
         }
     }
     /**
@@ -75,7 +75,7 @@ class PasswordResetController extends Controller
         } else {
             return response()->json([
                 'error' => 'Code de validation incorrect.'
-            ]);
+            ], 500);
         }
     }
 }

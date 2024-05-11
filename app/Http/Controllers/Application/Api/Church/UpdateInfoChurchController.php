@@ -16,19 +16,27 @@ class UpdateInfoChurchController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string',
-                'abbreviation' => 'required|string',
-                'logo' => 'required|string',
+                'abbreviation' => 'nullable|string',
+                'logo' => 'nullable|string',
             ]);
-            // Check if the user already has an avatar
-            if ($church->logo) {
-                // Delete the old avatar from the server
-                FileRepository::deleteFile($church->logo, 'public');
+            if ($request->logo == null) {
+                $church->update([
+                    'name' => $request->name,
+                    'abbreviation' => $request->abbreviation,
+                ]);
+            } else {
+                // Check if the user already has an avatar
+                if ($church->logo) {
+                    // Delete the old avatar from the server
+                    FileRepository::deleteFile($church->logo, 'public');
+                }
+                $church->update([
+                    'name' => $request->name,
+                    'abbreviation' => $request->abbreviation,
+                    'logo' =>  FileRepository::uploadFile($request->logo, 'public', 'church/logo/'),
+                ]);
             }
-            $church->update([
-                'name' => $request->name,
-                'abbreviation' => $request->abbreviation,
-                'logo' =>  FileRepository::uploadFile($request->logo, 'public', 'church/logo/'),
-            ]);
+
             return response()->json([
                 'message' => "Info de l'église mise à jour avec succès",
                 'church' => new ChurchResource($church),

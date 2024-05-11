@@ -23,6 +23,7 @@ class UserResource extends JsonResource
                 'phone' => $this->phone,
                 'avatar' => $this->avatar ? config('app.url') . '/storage/' . $this->avatar : null,
                 'church' => $this->church ? new ChurchResource($this->church) : null,
+                'role' => new RoleResource($this->role)
             ];
         } else {
             return  [
@@ -32,6 +33,7 @@ class UserResource extends JsonResource
                 'phone' => $this->phone,
                 'avatar' => $this->avatar ? config('app.url') . '/public/storage/' . $this->avatar : null,
                 'church' => $this->church ? new ChurchResource($this->church) : null,
+                'role' => new RoleResource($this->role)
             ];
         }
     }

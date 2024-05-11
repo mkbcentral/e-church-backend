@@ -18,29 +18,27 @@ class LoginController extends Controller
     {
         try {
             $request->validate([
-                'login' => 'required',
+                'email' => 'required',
                 'password' => 'required',
             ]);
-            $user = User::where('email', $request->login)
-                ->orWhere('phone', $request->login)
+            $user = User::where('email', $request->email)
+                ->orWhere('phone', $request->email)
                 ->first();
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
-                    'message' => 'The provided credentials are incorrect.',
-                ], 401);
+                    'error' => 'The provided credentials are incorrect.',
+                ], 500);
             } else {
                 $token = $user->createToken('token')->plainTextToken;
                 return response([
-                    'user' => new UserResource($user),
+                    'data' => new UserResource($user),
                     'token' => $token,
-                    'message' => 'Connexion avec succès.',
                 ], 200);
             }
         } catch (HttpException $ex) {
             return response([
                 'error' => $ex->getMessage(),
-                'code' => $ex->getStatusCode(),
-            ]);
+            ], 500);
         }
     }
 }

@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\Storage;
 
 class FileRepository
 {
-    public static function uploadFile($image, string $path = 'public', $directory): string
+    public static function uploadFile($image, string $path = 'public', $directory, string $type = "image"): string
     {
-        $filename = time() . '.png';
+        if ($type == "image") {
+            $filename = time() . '.png';
+        } else {
+            $filename = time() . '.mp3';
+        }
+
         Storage::disk($path)
             ->put($directory . $filename, base64_decode($image));
         return  $directory . '' . $filename;
