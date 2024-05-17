@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Application\Api\Church\ChangeChurchStatusController;
 use App\Http\Controllers\Application\Api\Church\CreateChurchController;
+use App\Http\Controllers\Application\Api\Church\GetChurchController;
 use App\Http\Controllers\Application\Api\Church\UpdateInfoChurchController;
+use App\Http\Controllers\Application\Api\GetListRoleController;
 use App\Http\Controllers\Application\Api\Preaching\CreatePreachingController;
 use App\Http\Controllers\Application\Api\Preaching\DeletePreachingController;
 use App\Http\Controllers\Application\Api\Preaching\MakeOnlinePreachingController;
@@ -28,13 +30,16 @@ Route::prefix('user')->group(function () {
     Route::put('attach-role/{user}', AttachRoleToUserController::class)->middleware('auth:sanctum');
 });
 
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function () {
     //Church routes
     Route::prefix('church')->group(function () {
         Route::post('/create', CreateChurchController::class);
         Route::put('/update/{church}', UpdateInfoChurchController::class);
         Route::get('/change-status/{church}', [ChangeChurchStatusController::class]);
         Route::get('/list', [ListChurchController::class, 'getListChurches']);
+        Route::controller(GetChurchController::class)->group(function () {
+            Route::get('church-by-user/{id}', 'getChurchByUserId');
+        });
     });
     //Preaching routes
     Route::prefix('preaching')->group(function () {
@@ -43,5 +48,8 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::put('/make-online/{preaching}', MakeOnlinePreachingController::class);
         Route::delete('/delete/{preaching}', DeletePreachingController::class);
     });
+    //Preaching routes
+    Route::prefix('role')->group(function () {
+        Route::get('/list', GetListRoleController::class);
+    });
 });
-
